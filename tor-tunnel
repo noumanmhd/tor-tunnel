@@ -32,6 +32,9 @@ function ip {
 }
 
 function start {
+	if cat /etc/resolv.conf | grep 'tor-tunnel' > /dev/null;then
+		$0 stop
+	fi
 	echo -e "\n$GREEN[$BLUE i$GREEN ]$BLUE Starting Tor Tunnel:$RESETCOLOR\n"
 	
 	if ! pidof tor > /dev/null; then
@@ -43,17 +46,14 @@ function start {
 		iptables-save > /etc/network/iptables.rules
 		echo -e " $GREEN*$BLUE Saved iptables rules!!!$RESETCOLOR\n"
 	fi
+
+	cp /etc/resolv.conf /etc/resolv.conf.bak
+	touch /etc/resolv.conf
+	echo -e 'nameserver 127.0.0.1 # tor-tunnel' > /etc/resolv.conf
+	echo -e " $GREEN*$BLUE Modified resolv.conf to use Tor DNS!!!"
 	
 	iptables -F
 	iptables -t nat -F
-	
-	if ! cat /etc/resolv.conf | grep 'tor-tunnel' > /dev/null;then
-		cp /etc/resolv.conf /etc/resolv.conf.bak
-		touch /etc/resolv.conf
-		echo -e 'nameserver 127.0.0.1 # tor-tunnel' > /etc/resolv.conf
-		echo -e " $GREEN*$BLUE Modified resolv.conf to use Tor DNS!!!"
-	fi
-	
 
 	# set iptables nat
 	iptables -t nat -A OUTPUT -m owner --uid-owner $TOR_UID -j RETURN

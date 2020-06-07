@@ -25,6 +25,8 @@ function copy_script_files {
     chmod 755  /usr/local/bin/tor-tunnel
     cp ./checkip /usr/local/bin/
     chmod 755 /usr/local/bin/checkip
+    install -g 0 -o 0 -m 0644 ./man/tor-tunnel.1 /usr/share/man/man1/
+    gzip /usr/share/man/man1/tor-tunnel.1
 }
 function install_pkg {
     if ! dpkg -l | grep -n " tor " > /dev/null; then

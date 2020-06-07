@@ -38,6 +38,7 @@ function ip {
 }
 
 function start {
+	change
 	if cat /etc/resolv.conf | grep 'tor-tunnel' > /dev/null;then
 		$0 stop
 	fi
@@ -116,7 +117,7 @@ function stop {
 		rm /etc/resolv.conf
 		cp /etc/resolv.conf.bak /etc/resolv.conf
 	fi
-		
+	systemctl stop tor
 	echo -e " $GREEN*$BLUE Tor Tunnel mode Stopped!!!$RESETCOLOR\n"
 }
 
@@ -147,7 +148,7 @@ case "$1" in
 	status)
 		status
 	;;
-	myip|ip)
+	ip)
 		ip
 	;;
 	restart)
@@ -170,7 +171,7 @@ Tunnel all traffic with Tor Module
 	$RED restart$BLUE -$GREEN Combines \"stop\" and \"start\" options
 	$RED change$BLUE -$GREEN Changes identity restarting TOR
 	$RED status$BLUE -$GREEN Check if TOR is working properly
-	$RED myip$BLUE -$GREEN Show your current IP address
+	$RED ip$BLUE -$GREEN Show your current IP address
 	
 $RESETCOLOR" >&2
 exit 1

@@ -1,0 +1,50 @@
+# Daemonize
+RunAsDaemon 1
+
+# Define virtual network mask
+VirtualAddrNetwork 10.192.0.0/10
+AutomapHostsOnResolve 1
+AutomapHostsSuffixes .exit,.onion
+
+# Geolocation Rules
+GeoIPExcludeUnknown 1
+#StrictNodes 1
+#ExitNodes {us}
+
+# Proxy Configurations
+#HTTPSProxy 192.168.8.1:8080
+#ReachableAddresses *:80,*:443
+
+# Padding Configurations
+ConnectionPadding 0
+CircuitPadding 0
+
+# Other Configurations
+ClientOnly 1
+
+# Define tor ports and explicitly declare some security flags
+TransPort 127.0.0.1:9040 IsolateClientAddr IsolateSOCKSAuth IsolateClientProtocol IsolateDestPort IsolateDestAddr
+#SocksPort 127.0.0.1:9050 IsolateClientAddr IsolateSOCKSAuth IsolateClientProtocol IsolateDestPort IsolateDestAddr
+#ControlPort 9051
+#HashedControlPassword 16:FDE8ED505C45C8BA602385E2CA5B3250ED00AC0920FEC1230813A1F86F
+
+# Use tor to resolve domain names
+DNSPort 127.0.0.1:9053
+
+# Use hardware accaleration when possible for crypto
+HardwareAccel 1
+
+# Socket safety hacks
+TestSocks 1
+AllowNonRFC953Hostnames 0
+#WarnPlaintextPorts 23,109,110,143,80
+
+# DNS safety hacks
+ClientRejectInternalAddresses 1
+
+# Circuit Hacks
+NewCircuitPeriod 40
+MaxCircuitDirtiness 600
+MaxClientCircuitsPending 100
+UseEntryGuards 1
+EnforceDistinctSubnets 0

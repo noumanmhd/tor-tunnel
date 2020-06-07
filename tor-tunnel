@@ -47,7 +47,7 @@ function start {
 	iptables -F
 	iptables -t nat -F
 	
-	if ! cat /etc/resolv.conf | grep 'tor-tunnel';then
+	if ! cat /etc/resolv.conf | grep 'tor-tunnel' > /dev/null;then
 		cp /etc/resolv.conf /etc/resolv.conf.bak
 		touch /etc/resolv.conf
 		echo -e 'nameserver 127.0.0.1 # tor-tunnel' > /etc/resolv.conf

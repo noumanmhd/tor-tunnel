@@ -20,6 +20,7 @@ function config_all {
 function remove_script_files {
     rm /usr/local/bin/tor-tunnel
     rm /usr/local/bin/checkip
+    rm /usr/share/man/man1/tor-tunnel.1.gz
     if [ -e /etc/resolv.conf.bak ]; then
 		rm /etc/resolv.conf
 		cp /etc/resolv.conf.bak /etc/resolv.conf

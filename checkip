@@ -4,22 +4,67 @@ import json
 import requests
 
 
-def check_my_ip(ip=None):
+def check_ip_a(ip=None):
     api = 'https://ipinfo.io/'
     if ip is not None:
         api += ip
     ip = None
+    data = {}
     try:
         ip = requests.get(api)
         ip = json.loads(ip.text)
     except:
-        print("NETWORK ERROR!!!")
-    print("IP:       {}".format(ip.get("ip")))
-    print("Country:  {}".format(ip.get("region")))
-    print("City:     {}".format(ip.get("city")))
-    print("CC:       {}".format(ip.get("country")))
-    print("Hostname: {}".format(ip.get("hostname")))
-    print("Timezone: {}".format(ip.get("timezone")))
+        return None
+    try:
+        data["ip"] = ip["ip"]
+        data["region"] = ip.get("region")
+        data["city"] = ip.get("city")
+        data["cc"] = ip.get("country")
+        data["hostname"] = ip.get("hostname")
+        data["timezone"] = ip.get("timezone")
+
+        return data
+    except:
+        return None
+
+def check_ip_b(ip=None):
+    api = 'https://ipvigilante.com/'
+    if ip is not None:
+        api += ip
+    ip = None
+    data = {}
+    try:
+        ip = requests.get(api)
+        ip = json.loads(ip.text)["data"]
+    except:
+        return None
+    try:
+        data["ip"] = ip["ipv4"]
+        data["region"] = ip.get("continent_name")
+        data["city"] = ip.get("subdivision_1_name")
+        data["cc"] = ip.get("country_name")
+        data["hostname"] = ip.get("hostname")
+        data["timezone"] = ip.get("timezone")
+
+        return data
+    except:
+        return None
+def check_my_ip(ip=None):
+    data = check_ip_a(ip)
+    if data is None:
+        data = check_ip_b(ip)
+    show_data(data)
+
+def show_data(data): 
+    if data is None:
+        print("Network ERROR!!!")
+    else:
+        print("IP:       {}".format(data["ip"]))
+        print("Region:   {}".format(data.get("region")))
+        print("City:     {}".format(data.get("city")))
+        print("CC:       {}".format(data.get("cc")))
+        print("Hostname: {}".format(data.get("hostname")))
+        print("Timezone: {}".format(data.get("timezone")))
     
 if __name__ == '__main__':
     if len(sys.argv) > 1:

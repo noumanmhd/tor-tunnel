@@ -27,8 +27,14 @@ function init {
 }
 
 function ip {
-	echo -e $GREEN
-	checkip
+	if cat /etc/resolv.conf | grep 'tor-tunnel' > /dev/null;then
+		tor_ip=$(curl https://check.torproject.org |& grep -Po "(?<=strong>)[\d\.]+(?=</strong)")
+		echo -e $GREEN
+		checkip $tor_ip
+	else
+		echo -e $RED
+		checkip
+	fi
 }
 
 function start {

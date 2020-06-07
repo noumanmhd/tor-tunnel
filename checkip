@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import sys
+import json
+import requests
+
+
+def check_my_ip(ip=None):
+    api = 'https://ipinfo.io/'
+    if ip is not None:
+        api += ip
+    ip = None
+    try:
+        ip = requests.get(api)
+        ip = json.loads(ip.text)
+    except:
+        print("NETWORK ERROR!!!")
+    print("IP:       {}".format(ip.get("ip")))
+    print("Country:  {}".format(ip.get("region")))
+    print("City:     {}".format(ip.get("city")))
+    print("CC:       {}".format(ip.get("country")))
+    print("Hostname: {}".format(ip.get("hostname")))
+    print("Timezone: {}".format(ip.get("timezone")))
+    
+if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        check_my_ip(sys.argv[1])
+    else:
+        check_my_ip()

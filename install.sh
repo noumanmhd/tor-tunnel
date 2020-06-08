@@ -30,14 +30,14 @@ function install_pkg {
     if ! dpkg -l | grep -n " tor " > /dev/null; then
         echo -e "\n$GREEN[$RED!$GREEN] $RED Tor is not Installed!!!$RESETCOLOR\n"
         echo "Installing Tor:"
-        apt install tor
+        apt install tor -y
     else
         echo -e "\n$GREEN Tor is Installed!!!$RESETCOLOR\n"
     fi
     if ! dpkg -l | grep -n " python3  " > /dev/null; then
         echo -e "\n$GREEN[$RED!$GREEN] $RED Python3 is not Installed!!!$RESETCOLOR\n"
         echo "Installing Python3:"
-        apt install python3
+        apt install python3 -y
     else
         echo -e "\n$GREEN Python3 is Installed!!!$RESETCOLOR\n"
     fi

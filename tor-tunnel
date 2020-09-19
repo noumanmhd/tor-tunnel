@@ -117,7 +117,6 @@ function stop {
 		rm /etc/resolv.conf
 		cp /etc/resolv.conf.bak /etc/resolv.conf
 	fi
-	systemctl stop tor
 	echo -e " $GREEN*$BLUE Tor Tunnel mode Stopped!!!$RESETCOLOR\n"
 }
 

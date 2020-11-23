@@ -13,8 +13,8 @@ function check_root {
     fi
 }
 function copy_config_files {
-    cp ./torrc /etc/tor/torrc
-    cp ./tor.service /lib/systemd/system/tor.service
+    cp -f ./torrc /etc/tor/torrc
+    cp -f ./tor.service /lib/systemd/system/tor.service
 }
 function config_all {
     system daemon-reload
